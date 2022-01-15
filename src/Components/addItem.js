@@ -1,21 +1,62 @@
-import React from 'react'
+import React from "react";
 
-export default function addItem() {
+class AddItem extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      productName:"",
+      productPrice:0,
+    };
+  }
+    //when using a class component we use this.prop or this.state
+  render() {
     return (
-        <div>
-            <div>
-        <div className="mb-3 row">
-          <label htmlFor="inputPassword" className="col-sm-2 col-form-label">Password</label>
-          <div className="col-sm-10">
-            <input type="password" className="form-control" id="inputPassword" />
+      
+        <form className="row" 
+        onSubmit={(e)=> {
+            e.preventDefault()
+            this.props.addItem(this.state.productName , Number(this.state.productPrice)) 
+            }}
+            >
+          <div className="mb-3 mx-3 col-4" >
+            <label htmlFor="inputName" className="form-label">
+              Name
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="inputName"
+              aria-describedby="name" 
+              name="productName"
+              onChange={(e)=> {
+                this.setState({productName : (e.currentTarget.value)});
+              }}
+              value={this.state.productName}/>
+            
           </div>
-        </div> <div className="mb-3 row">
-          <label htmlFor="inputPassword" className="col-sm-2 col-form-label">Password</label>
-          <div className="col-sm-10">
-            <input type="password" className="form-control" id="inputPassword" />
+          <div className="mb-3 col-4">
+            <label htmlFor="inputPrice" className="form-label">
+              Price
+            </label>
+            <input
+              type="number"
+              className="form-control"
+              id="price"
+              name="productPrice"
+              onChange={(e)=> {
+                this.setState({productPrice : Number(e.currentTarget.value)})
+              }}
+              value={this.state.productPrice}
+            />
           </div>
-        </div>
-      </div>
-        </div>
+          {/* In dom we fetch items using id  but not here*/}
+          <button type="submit" className="btn btn-success col-3 " >
+           Add
+          </button>
+        </form>
+      
     );
+  }
 }
+
+export default AddItem;
